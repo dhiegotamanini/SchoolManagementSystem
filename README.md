@@ -39,7 +39,7 @@ Details about credentials and other settings are stored in `appsettings.json`. A
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/yourrepository.git
+    git clone git@github.com:dhiegotamanini/SchoolManagementSystem.git
     ```
 2. **Navigate to the project directory**:
     ```sh
