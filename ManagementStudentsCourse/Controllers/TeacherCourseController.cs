@@ -48,7 +48,8 @@ namespace Curso.Controllers
         public IActionResult ManagementTeacherCourses()
         {
             ViewBag.Teachers = _service.GetTeachers();
-            ViewBag.Courses = _courseService.GetCourses();
+            var courses = _courseService.GetCourses();
+            ViewBag.Courses = courses;
             return View();
         }
 

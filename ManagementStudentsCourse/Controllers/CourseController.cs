@@ -37,20 +37,18 @@ namespace Curso.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Save(int id, CourseDto courseDto)
         {
-            if (ModelState.IsValid) 
-            {
-                if (id == 0)
-                {
-                    _service.CreateCourse(courseDto);
-                }
-                else
-                {
-                    _service.UpdateCourse(id, courseDto);
-                }
 
-                return RedirectToAction("Index");
+            if (id == 0)
+            {
+                _service.CreateCourse(courseDto);
             }
-            return View("NewCourse", courseDto);
+            else
+            {
+                _service.UpdateCourse(id, courseDto);
+            }
+
+            return RedirectToAction("Index");
+
         }
 
 

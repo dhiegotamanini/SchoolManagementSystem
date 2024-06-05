@@ -14,8 +14,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
-
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 
@@ -27,32 +25,29 @@ builder.Services.AddTransient<ITeacherCourseRepository, TeacherCourseRepository>
 
 builder.Services.AddTransient<IStudentCourseRepository , StudentCourseRepository>();
 builder.Services.AddTransient<IStudentCourseService, StudentCourseService>();
-
 builder.Services.AddAutoMapper(typeof(AppProfile));
-
-
 
 var app = builder.Build();
 
-//using(var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    var context = services.GetRequiredService<AppDbContext>();
-//    context.Database.Migrate();
-
-//    var userContext = services.GetRequiredService<AdminContext>();
-//    userContext.Database.Migrate();
-
-    
-
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred migrating the DB: {ex.Message}");
+    }
+}
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
