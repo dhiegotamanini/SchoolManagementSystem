@@ -1,0 +1,63 @@
+﻿@using Curso.Models.Dtos
+@model List<ManagementTeacherCourseDto>
+
+@{
+    ViewData["Title"] = "List Teacher's Course's";
+}
+
+<div class=container>
+    <div class="mb-5">
+        <h1>List Teacher's Course's </h1>
+        <a asp-action="NewTeacherCourse" asp-controller="TeacherCourse" class="btn btn-info">Add New Teacher</a>
+        <a asp-action="ManagementTeacherCourses" asp-controller="TeacherCourse" class="btn btn-warning">Add New Teacher Course</a>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name Teacher</th>
+                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Course Name</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="TeacherCourse" asp-action="Edit" asp-route-id="@item.Teacher.Id">@item.TeacherName</a>
+                            
+                            </td>
+                        <td>@item.Teacher.Email</td>
+                        <td>@item.Teacher.CPF</td>
+                        <td>
+                            @foreach (var course in item.Courses)
+                            {
+                                <div>
+                                    <a asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id">@course.Name </a>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var course in item.Courses)
+                            {
+                                <div>
+                                    £ @course.Price
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="TeacherCourse" asp-action="Edit" asp-route-id="@item.TeacherId" class="btn btn-primary">Edit</a>
+                            <a asp-controller="TeacherCourse" asp-action="Delete" asp-route-id="@item.TeacherId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

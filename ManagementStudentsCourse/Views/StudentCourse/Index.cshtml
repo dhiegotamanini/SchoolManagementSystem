@@ -1,0 +1,99 @@
+﻿@using Curso.Models.Dtos
+@model List<StudentCourseDto>
+
+@{
+    ViewBag.Title = "List Student Course";
+}
+
+@{
+    var courses = ViewBag.Courses ?? null;
+    if (courses != null)
+    {
+        CourseDto item = new CourseDto() { Id = 0, Name = "Select one item" };
+        courses.Insert(0, item);
+    }
+    var courseSelected = ViewBag.Course ?? null;
+}
+
+<h1>Student Per Course</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="GetStudentsCourse" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label>Course</label>
+                @if (courses != null)
+                {
+                    <div class="form-group">
+                         <select class="form-control" name="selectedCourseId" onchange="this.form.submit();">
+                            @foreach (var item in courses)
+                            {
+                                var hasSelectedItem = courseSelected == item.Id ? "selected='selected'" : "";
+                                if(courseSelected == item.Id)
+                                {
+                                    <option value="@item.Id" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id" >@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                }
+                
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<hr />
+
+@if (Model !=null && Model.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Actived</th>
+                        <th>CourseName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Student" asp-action="Edit" asp-route-id="@item.StudentId">@item.StudentName </a>
+                            </td>
+                            <td>@item.Email</td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" checked="@item?.IsActive" disabled />
+                            </td>
+                            <td>
+                                <a asp-controller="Course" asp-action="Edit" asp-route-id="@item.CourseId">@item.CourseName </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-danger" role="alert">
+                <h6>There is no data for the selected item.</h6>
+            </div>
+        </div>
+    </div>
+    
+}
+

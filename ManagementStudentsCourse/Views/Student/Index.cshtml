@@ -1,0 +1,48 @@
+﻿@using Curso.Models.Dtos
+@model IList<StudentDto>
+
+@{
+    ViewBag.Title = "List Student's";
+}
+
+<div class="container">
+    <div class="mb-5">
+        <h1>List of students</h1>
+
+        <a asp-action="NewStudent" asp-controller="Student" class="btn btn-info">Add New Student</a>
+
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Date</th>
+                    <th>Course</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.CPF</td>
+                        <td>@item?.DateMatricula.ToString("dd/MM/yyyy")</td>
+                        <td><a asp-controller="Course" asp-action="Edit" asp-route-id="@item.CourseId">@item.CourseName </a> </td>
+                        <td> <input class="form-check-input" type="checkbox" checked="@item?.IsActive" disabled /> </td>
+                        <td>
+                            <a asp-controller="Student" asp-action="Edit" asp-route-id="@item.Id"   class="btn btn-primary">Edit</a>
+                            <a asp-controller="Student" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+﻿@using Curso.Models.Dtos
+@model IList<CourseDto>
+
+@{
+    ViewData["Title"] = "List Student's";
+}
+
+<div class="container">
+    <div class="mb-5">
+        <h1>List of course's</h1>
+        <a asp-action="NewCourse" asp-controller="Course" class="btn btn-info">Add New Course</a>
+    </div>
+    <div>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.Name</td>
+                        <td>@(course.Description != null && course.Description.Length > 50 ? String.Concat(course.Description.Substring(0, 50), "...") : course.Description)</td>
+                        <td>£ @course.Price</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Course" asp-route-id="@course.Id" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

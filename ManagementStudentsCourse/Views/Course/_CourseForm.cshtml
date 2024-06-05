@@ -1,0 +1,56 @@
+﻿@using System.Web.Optimization
+@using Curso.Models.Dtos
+@model CourseDto
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input type="text" class="form-control" asp-for="Name" />
+                <input type="hidden" class="form-control" asp-for="Id" />
+                @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <textarea class="form-control" asp-for="Description"></textarea>
+                @Html.ValidationMessageFor(x => x.Description , "" , new {@class = "text-danger"})
+            </div>
+
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Price</label>
+                <input type="text" class="form-control" asp-for="Price">
+                @Html.ValidationMessageFor(x => x.Price, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group mt-3">
+                <div class="col-md-offset-2 col-md-10">
+                    <button asp-action="Save" asp-controller="Course" class="btn btn-primary">Save</button>
+                    @if (ViewBag.OriginRequest != null && ViewBag.OriginRequest.Contains("TeacherCourse"))
+                    {
+                        <a asp-action="Index" asp-controller="TeacherCourse" class="btn btn-secondary">Back to List</a>
+                    }
+                    else if (ViewBag.OriginRequest != null && ViewBag.OriginRequest.Contains("StudentCourse"))
+                    {
+                        <a asp-action="Index" asp-controller="StudentCourse" class="btn btn-secondary">Back to List</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Index" asp-controller="Course" class="btn btn-secondary">Back to List</a>
+                    }
+                    
+                </div>
+            </div>
+
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+}
