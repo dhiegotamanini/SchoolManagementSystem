@@ -135,7 +135,6 @@ StyleCop.Cache
 *.dtbcache.v2
 *.vsidx
 *.config
-*.json
 *.txt
 
 # Arquivos e diretórios para ignorar
